@@ -64,7 +64,8 @@ if (isset($_GET['cid'])){
       if ($_SESSION['user_id']!="guest")
       		$sql="WHERE 1 ";
   }else{
-      $sql="WHERE problem_id>0 ";
+      //$sql="WHERE problem_id>0 ";
+      $sql="WHERE problem_id>0 AND result!=13 ";
   }
 }
 $start_first=true;
