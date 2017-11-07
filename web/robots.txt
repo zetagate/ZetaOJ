@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /ranklist*
+Disallow: /userinfo*
+Disallow: /status*
+Disallow: /problemstatus*
+
+

@@ -1,0 +1,6 @@
+*.inc.php
+*.o
+*.exe
+core/judge_client/judge_client
+core/judged/judged
+
