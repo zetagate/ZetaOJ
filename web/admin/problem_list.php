@@ -18,12 +18,12 @@ $sql="SELECT max(`problem_id`) as upid FROM `problem`";
 $page_cnt=100;
 $result=pdo_query($sql);
 $row=$result[0];
-$cnt=intval($row['upid'])-1000;
+$cnt=intval($row['upid'])-995;
 $cnt=intval($cnt/$page_cnt)+(($cnt%$page_cnt)>0?1:0);
 if (isset($_GET['page'])){
         $page=intval($_GET['page']);
 }else $page=$cnt;
-$pstart=1000+$page_cnt*intval($page-1);
+$pstart=995+$page_cnt*intval($page-1);
 $pend=$pstart+$page_cnt;
 echo "<title>Problem List</title>";
 echo "<center><h2>Problem List</h2></center>";

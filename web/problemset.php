@@ -5,7 +5,7 @@
 	require_once('./include/cache_start.php');
 	require_once('./include/setlang.php');
     $view_title= "Problem Set";
-$first=1000;
+$first=995;
   //if($OJ_SAE) $first=1;
 $sql="select max(`problem_id`) as upid FROM `problem`";
 $page_cnt=100;
