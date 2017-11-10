@@ -153,7 +153,7 @@ exps[57]="错误的标点或符号";
 function explain(){
 //alert("asdf");
 var errmsg=document.getElementById("errtxt").innerHTML;
-var expmsg="辅助解释：<br>";
+var expmsg="보조설명：<br>";
 for(var i=0;i<pats.length;i++){
 var pat=pats[i];
 var exp=exps[i];

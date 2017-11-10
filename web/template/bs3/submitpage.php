@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +17,7 @@
       <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js" type="text/javascript" charset="utf-8"></script>
   </head>
 
   <body>
@@ -31,6 +32,7 @@ if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
 {
 $OJ_EDITE_AREA=false;
 }
+$OJ_EDITE_AREA=false;
 if($OJ_EDITE_AREA){
 ?>
 <script language="Javascript" type="text/javascript" src="edit_area/edit_area_full.js"></script>
@@ -55,6 +57,7 @@ id: "source"
 onsubmit="return checksource(document.getElementById('source').value);"
 <?php }?>
 >
+<input id="source2" name="source2" type="hidden">
 <?php if (isset($id)){?>
 Problem <span class=blue><b><?php echo $id?></b></span>
 <input id=problem_id type='hidden' value='<?php echo $id?>' name="id" ><br>
@@ -66,7 +69,9 @@ Problem <span class=blue><b><?php echo chr($pid+ord('A'))?></b></span> of Contes
 <input id="cid" type='hidden' value='<?php echo $cid?>' name="cid">
 <input id="pid" type='hidden' value='<?php echo $pid?>' name="pid">
 <?php }?>
+<!--
 <div>※주의 : 언어를 변경하면 코드가 초기화됩니다.</div>
+-->
 <span id="language_span">Language:
 <select id="language" name="language" onChange="reloadtemplate(this);" >
 <?php
@@ -78,12 +83,22 @@ $langmask=$OJ_LANGMASK;
 $lang=(~((int)$langmask))&((1<<($lang_count))-1);
 if(isset($_COOKIE['lastlang'])) $lastlang=$_COOKIE['lastlang'];
 else $lastlang=0;
+
+/*
 for($i=0;$i<$lang_count;$i++){
 if($lang&(1<<$i))
 echo"<option value=$i ".( $lastlang==$i?"selected":"").">
 ".$language_name[$i]."
 </option>";
 }
+*/
+$lastlang=-1;
+echo"<option value=-1 selected>언어선택</option>";
+for($i=0;$i<$lang_count;$i++){
+if($lang&(1<<$i))
+echo"<option value=$i>".$language_name[$i]."</option>";
+}
+
 ?>
 </select>
 <br>
@@ -98,12 +113,32 @@ echo"<option value=$i ".( $lastlang==$i?"selected":"").">
 
 <br>
 </span>
-<textarea style="width:80%" cols=180 rows=20 id="source" name="source"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></textarea><br>
-<?php echo $MSG_Input?>:<textarea style="width:30%" cols=40 rows=5 id="input_text" name="input_text" ><?php echo $view_sample_input?></textarea>
-<?php echo $MSG_Output?>:
-<textarea style="width:30%" cols=10 rows=5 id="out" name="out" >SHOULD BE:
+
+<textarea style="width:80%; display:none;" cols=180 rows=20 id="source"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></textarea>
+<div id="source_edit" style="width:80%;height:400px;">
+<?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?>
+</div>
+<script>
+    var aceEditor = ace.edit("source_edit");
+    aceEditor.setTheme("ace/theme/xcode");
+    aceEditor.setFontSize(15);
+    aceEditor.getSession().setMode("ace/mode/text");
+</script>
+
+<br>
+<div style="display:inline-block">
+<div style="float:left; padding-right:5px">
+샘플 입력<br>
+<textarea class="form-control" cols=20 rows=6 id="input_text" name="input_text" ><?php echo $view_sample_input?>
+</textarea>
+</div>
+<div style="float:left; padding-left:5px">
+출력<br>
+<textarea class="form-control" cols=20 rows=6 id="out" name="out" >
 <?php echo $view_sample_output?>
 </textarea>
+</div>
+</div>
 <br>
 <br>
 <input id="Submit" class="btn btn-info" type=button value="<?php echo $MSG_SUBMIT?>" onclick="do_submit();" >
@@ -214,6 +249,7 @@ ret=ie.innerText;
 return ret+"";
 }
 var count=0;
+var selectedLang = -1;
 	 
 function encoded_submit(){
 if(typeof(eAL) != "undefined"){   eAL.toggle("source");eAL.toggle("source");}
@@ -236,26 +272,37 @@ if(typeof(eAL) != "undefined"){   eAL.toggle("source");eAL.toggle("source");}
 }
 
 function do_submit(){
-	if(using_blockly) 
-		 translate();
-	if(typeof(eAL) != "undefined"){ eAL.toggle("source");eAL.toggle("source");}
+	if(selectedLang == -1) {
+		window.alert("언어가 선택되지 않았습니다.");
+		return;
+	}
+	//if(using_blockly) 
+	//	 translate();
+	//if(typeof(eAL) != "undefined"){ eAL.toggle("source");eAL.toggle("source");}
 	var mark="<?php echo isset($id)?'problem_id':'cid';?>";
 	var problem_id=document.getElementById(mark);
 	if(mark=='problem_id')
 	problem_id.value='<?php if (isset($id))echo $id?>';
 	else
 	problem_id.value='<?php if (isset($cid))echo $cid?>';
+	document.getElementById("source2").value=aceEditor.getValue();
 	document.getElementById("frmSolution").target="_self";
 	<?php if($OJ_LANG=="cn") echo "if(checksource(document.getElementById('source').value))";?>
 	document.getElementById("frmSolution").submit();
 }
 var handler_interval;
 function do_test_run(){
+	if(selectedLang == -1) {
+		window.alert("언어가 선택되지 않았습니다.");
+		return;
+	}
 	if( handler_interval) window.clearInterval( handler_interval);
 	var loader="<img width=18 src=image/loader.gif>";
 	var tb=window.document.getElementById('result');
 	if(typeof(eAL) != "undefined"){ eAL.toggle("source");eAL.toggle("source");}
-	if($("#source").val().length<10) return alert("too short!");
+
+	document.getElementById("source2").value=aceEditor.getValue();
+	if($("#source2").val().length<10) return alert("too short!");
 	if(tb!=null)tb.innerHTML=loader;
 
 	var mark="<?php echo isset($id)?'problem_id':'cid';?>";
@@ -288,13 +335,23 @@ function resume(){
 	}
 }
 function reloadtemplate(lang){
+   selectedLang = lang.value;
    document.cookie="lastlang="+lang.value;
+   if(lang.value == -1)
+	   aceEditor.getSession().setMode("ace/mode/text");
+   else if(lang.value == 3)
+	   aceEditor.getSession().setMode("ace/mode/java");
+   else
+	   aceEditor.getSession().setMode("ace/mode/c_cpp");
+	//console.log(lang.value);
    //alert(document.cookie);
+/*
    var url=window.location.href;
    var i=url.indexOf("sid=");
    if(i!=-1) url=url.substring(0,i-1);
    if(confirm("<?php echo  $MSG_LOAD_TEMPLATE_CONFIRM?>"))
         document.location.href=url;
+*/
 }
 function openBlockly(){
    $("#frame_source").hide();

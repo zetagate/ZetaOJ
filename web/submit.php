@@ -111,11 +111,17 @@ if (isset($_POST['id'])) {
        $test_run=true;
 }
 $language=intval($_POST['language']);
+if ($language==-1){
+	$view_errors="언어가 선택되지 않았습니다!";
+	require("template/".$OJ_TEMPLATE."/error.php");
+	exit(0);
+}
 if ($language>count($language_name) || $language<0) $language=0;
 $language=strval($language);
 
 
-$source=$_POST['source'];
+
+$source=$_POST['source2'];
 $input_text=$_POST['input_text'];
 if(get_magic_quotes_gpc()){
 	$source=stripslashes($source);
@@ -156,12 +162,12 @@ setcookie('lastlang',$language,time()+360000);
 $ip=$_SERVER['REMOTE_ADDR'];
 
 if ($len<2){
-	$view_errors="Code too short!<br>";
+	$view_errors="코드가 너무 짧습니다!<br>";
 	require("template/".$OJ_TEMPLATE."/error.php");
 	exit(0);
 }
 if ($len>65536){
-	$view_errors="Code too long!<br>";
+	$view_errors="코드가 너무 깁니다!<br>";
 	require("template/".$OJ_TEMPLATE."/error.php");
 	exit(0);
 }
