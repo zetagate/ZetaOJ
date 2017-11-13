@@ -32,7 +32,7 @@
 var pats=new Array();
 var exps=new Array();
 pats[0]=/A Not allowed system call.* /;
-exps[0]="허용되지 않는 시스템 호출";
+exps[0]="허용되지 않는 시스템 호출입니다. sync_with_stdio와 같은 함수들은 현재 버그로 인하여 동작하지 않습니다..";
 pats[1]=/Segmentation fault/;
 exps[1]="접근해서는 안 되는 메모리 영역에 접근";
 pats[2]=/Floating point exception/;

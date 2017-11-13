@@ -118,11 +118,13 @@ echo"<option value=$i>".$language_name[$i]."</option>";
 <div id="source_edit" style="width:80%;height:400px;">
 <?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?>
 </div>
+<div id="codeLen"></div>
 <script>
     var aceEditor = ace.edit("source_edit");
     aceEditor.setTheme("ace/theme/xcode");
     aceEditor.setFontSize(15);
     aceEditor.getSession().setMode("ace/mode/text");
+    aceEditor.on("change", function(){document.getElementById("codeLen").innerHTML="length : " + aceEditor.getSession().getValue().length;});
 </script>
 
 <br>

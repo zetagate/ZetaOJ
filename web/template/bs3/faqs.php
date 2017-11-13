@@ -58,12 +58,12 @@
 <pre>
 <b>C</b>
 gcc 5.4.0
-gcc Main.c -o Main -fno-asm -O2 -Wall -lm --static -std=c99 -DONLINE_JUDGE
+gcc Main.c -o Main -fno-asm -O2 -Wall -lm --static -std=<b>c99</b> -DONLINE_JUDGE
 </pre>
 <pre>
 <b>C++</b>
 gcc 5.4.0
-g++ -fno-asm -Wall -lm --static -std=<b>c++14</b> -DONLINE_JUDGE -o Main Main.cc
+<b>clang++</b> -fno-asm -Wall -lm --static -std=<b>c++14</b> -DONLINE_JUDGE -o Main Main.cc
 </pre>
 <pre>
 <b>Java</b>
