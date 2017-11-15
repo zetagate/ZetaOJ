@@ -28,7 +28,7 @@ function colorId($id, $rank)
 		$colored_id.= "<div style=\"color:saddleBrown;font-weight:bold;\">";
 	}
 	else if($rank > 25) {
-		$colored_id.= "<div style=\"color:stateGray;font-weight:bold;\">";
+		$colored_id.= "<div style=\"color:dimgray;font-weight:bold;\">";
 	}
 	else if($rank > 20) {
 		$colored_id.= "<div style=\"color:goldenrod;font-weight:bold;\">";

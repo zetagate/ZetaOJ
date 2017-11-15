@@ -6,6 +6,7 @@
         require_once('./include/setlang.php');
         $view_title= "Welcome To Online Judge";
 require_once("./include/const.inc.php");
+require_once("./include/simpletime.php");
 
 if(isset($_GET['id']))$id=intval($_GET['id']);
 if (isset($_GET['page']))
@@ -153,7 +154,11 @@ foreach($result as $row){
         }
         if ($flag) $view_solution[$j][6]=  "$s_cl";
         else $view_solution[$j][6]=  "------";
-        $view_solution[$j][7]=  $row['in_date'];
+
+        $simpleTime = getSimpleTime($row['in_date']);
+        $view_solution[$j][7]= "<span class='label label-info'>".$simpleTime."</span>";
+
+
         $j++;
         $last_user_id=$row['user_id'];
 	$i++;

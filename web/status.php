@@ -9,6 +9,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
     require_once('./include/db_info.inc.php');
 	require_once('./include/setlang.php');
 	require_once('./include/colorid.php');
+	require_once('./include/simpletime.php');
 	$view_title= "$MSG_STATUS";
 	
 
@@ -310,7 +311,10 @@ for ($i=0;$i<$rows_cnt;$i++){
 			$view_status[$i][6]="----";
 			$view_status[$i][7]="----";
 		}
-        $view_status[$i][8]= $row['in_date'];
+	$simpleTime = getSimpleTime($row['in_date']);
+	
+
+        $view_status[$i][8]= "<span class='label label-info'>".$simpleTime."</span>";
         //$view_status[$i][9]= $row['judger'];
         $view_status[$i][9]= "";
         
