@@ -2128,8 +2128,8 @@ void watch_solution(pid_t pidApp, char * infile, int & ACflg, int isspj,
 
 
 			sprintf(error,
-                                        "[ERROR] A Not allowed system call: runid:%d CALLID:%ld\n"
-                                        ,solution_id, (long)reg.REG_SYSCALL);
+                                        "[ERROR] A Not allowed system call: runid:%d CALLID:%llu\n"
+                                        ,solution_id, reg.REG_SYSCALL);
 
  
 			write_log(error);

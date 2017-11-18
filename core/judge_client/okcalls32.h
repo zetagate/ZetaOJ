@@ -17,9 +17,9 @@
  * along with HUSTOJ. if not, see <http://www.gnu.org/licenses/>.
  */
 //c & c++
-int LANG_CV[256] = { 85, 8,140, SYS_time, SYS_read, SYS_uname, SYS_write, SYS_open,
+int LANG_CV[256] = { 85, 8,140, 99,SYS_time, SYS_read, SYS_uname, SYS_write, SYS_open,
 		SYS_close, SYS_execve, SYS_access, SYS_brk, SYS_munmap, SYS_mprotect,
-		SYS_mmap2, SYS_fstat64, SYS_set_thread_area, 252, 0 };
+		SYS_mmap2, SYS_fstat64, SYS_set_thread_area, 252,  0 };
 //pascal
 int LANG_PV[256] = { 0,9, 59, 97, 13, 16, 89, 140, 91, 175, 195, 13, SYS_open, SYS_set_thread_area,
 		SYS_brk, SYS_read, SYS_uname, SYS_write, SYS_execve, SYS_ioctl,

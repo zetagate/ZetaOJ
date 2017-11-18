@@ -1,6 +1,7 @@
 *.inc.php
 *.o
 *.exe
+*.swp
 core/judge_client/judge_client
 core/judged/judged
 web/upload
