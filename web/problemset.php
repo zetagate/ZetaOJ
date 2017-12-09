@@ -76,12 +76,12 @@ if(isset($_GET['search'])&&trim($_GET['search'])!=""){
 
 if (isset($_SESSION['administrator'])){
 	
-	$sql="SELECT `problem_id`,`title`,`source`,`submit`,`accepted` FROM `problem` WHERE $filter_sql ";
+	$sql="SELECT `problem_id`,`title`,`source`,`submit`,`accepted`,`score` FROM `problem` WHERE $filter_sql ";
 	
 }
 else{
 	$now=strftime("%Y-%m-%d %H:%M",time());
-	$sql="SELECT `problem_id`,`title`,`source`,`submit`,`accepted` FROM `problem` ".
+	$sql="SELECT `problem_id`,`title`,`source`,`submit`,`accepted`,`score` FROM `problem` ".
 	"WHERE `defunct`='N' and $filter_sql AND `problem_id` NOT IN(
 		SELECT  `problem_id` 
 		FROM contest c
@@ -122,8 +122,9 @@ foreach ($result as $row){
 	$view_problemset[$i][1]="<div class='center'>".$row['problem_id']."</div>";;
 	$view_problemset[$i][2]="<div class='left'><a href='problem.php?id=".$row['problem_id']."'>".$row['title']."</a></div>";;
 	$view_problemset[$i][3]="<div class='center'><a href='problemset.php?search=".$row['source']."'><nobr>".mb_substr($row['source'],0,8,'utf8')."</nobr></a></div >";
-	$view_problemset[$i][4]="<div class='center'><a href='status.php?problem_id=".$row['problem_id']."&jresult=4'>".$row['accepted']."</a></div>";
-	$view_problemset[$i][5]="<div class='center'><a href='status.php?problem_id=".$row['problem_id']."'>".$row['submit']."</a></div>";
+	$view_problemset[$i][4]="<div class='center'><a href='status.php?problem_id=".$row['problem_id']."&jresult=4'>".$row['accepted']."</a>/<a href='status.php?problem_id=".$row['problem_id']."'>".$row['submit']."</a></div>";
+	$view_problemset[$i][5]="<div style='text-align:right'>".$row['score']."</div>";
+	//$view_problemset[$i][5]="<div class='center'><a href='status.php?problem_id=".$row['problem_id']."'>".$row['submit']."</a></div>";
 	
 	
 	$i++;

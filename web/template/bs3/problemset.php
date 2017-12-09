@@ -67,9 +67,9 @@ for ($i=$start;$i<=$end;$i++){
 <th width='5'></th>
 <th width='20'  class='hidden-xs' ><?php echo $MSG_PROBLEM_ID?></th>
 <th><?php echo $MSG_TITLE?></th>
-<th class='hidden-xs' width='10%'><?php echo $MSG_SOURCE?></th>
-<th style="cursor:hand" width=60 ><?php echo $MSG_AC?></th>
-<th style="cursor:hand" width=60 ><?php echo $MSG_SUBMIT?></th>
+<th class='hidden-xs' style="text-align:center" width='10%'><?php echo $MSG_SOURCE?></th>
+<th style="cursor:hand" width=60 ><?php echo $MSG_AC."/".$MSG_SUBMIT;?></th>
+<th style="cursor:hand;text-align:right;" width=40 ><?php echo "점수"?></th>
 </tr>
 </thead>
 <tbody>

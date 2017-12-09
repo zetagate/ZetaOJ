@@ -63,7 +63,7 @@ gcc Main.c -o Main -fno-asm -O2 -Wall -lm --static -std=<b>c99</b> -DONLINE_JUDG
 <pre>
 <b>C++</b>
 clang 3.8.0
-<b>clang++</b> -fno-asm -Wall -lm --static -std=<b>c++14</b> -DONLINE_JUDGE -o Main Main.cc
+<b>clang++</b> -fno-asm -O2 -Wall -lm --static -std=<b>c++14</b> -DONLINE_JUDGE -o Main Main.cc
 </pre>
 <pre>
 <b>Java</b>

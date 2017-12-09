@@ -924,7 +924,7 @@ int compile(int lang,char * work_dir) {
 	int pid;
 
 	const char * CP_C[] = { "gcc", "Main.c", "-o", "Main", "-fno-asm", "-Wall",
-			"-lm", "--static", "-std=c99", "-DONLINE_JUDGE", NULL };
+			"-lm", "--static", "-std=c99", "-O2", "-DONLINE_JUDGE", NULL };
 	const char * CP_X[] = { "clang++", "-fno-asm", "-Wall",
 			"-lm", "--static", "-std=c++14", "-O2","-DONLINE_JUDGE", "-o", "Main", "Main.cc", NULL };
 	const char * CP_P[] =
