@@ -69,7 +69,7 @@ if ($page<$pagemin) $page=$pagemin;
 if ($page>$pagemax) $page=$pagemax;
 $start=$page*20;
 $sz=20;
-if ($start+$sz>$acuser) $sz=$acuser-$start;
+//if ($start+$sz>$acuser) $sz=$acuser-$start;
 
 
 
@@ -91,16 +91,16 @@ if (isset($OJ_AUTO_SHARE)&&$OJ_AUTO_SHARE&&isset($_SESSION['user_id'])){
 }
 
 $sql="SELECT * FROM (
-  SELECT COUNT(*) att, user_id,  min(10000000000000000000 + time*100000000000 + memory*100000 + code_length) score
+  SELECT COUNT(*) att, user_id, language, min(10000000000000000000 + time*100000000000 + memory*100000 + code_length) score
   FROM solution
   WHERE problem_id =? AND result =4
-  GROUP BY user_id
+  GROUP BY user_id, language
   ORDER BY score, in_date DESC
 )c
 LEFT JOIN (
   SELECT solution_id, user_id, share, language, 10000000000000000000 + time*100000000000 + memory*100000 + code_length score, in_date
   FROM solution 
-  WHERE problem_id =? AND result =4  
+  WHERE problem_id =? AND result =4
   ORDER BY score, in_date DESC
 )b ON b.user_id=c.user_id AND b.score=c.score
 ORDER BY c.score, in_date ASC
@@ -112,12 +112,13 @@ $result=pdo_query( $sql,$id,$id);
 $view_solution=array();
 $j=0;
 $last_user_id='';
+$last_lang='';
 $i=$start+1;
 
 
 
 $solved=false;
-//does he solve the problem?
+//does current logined user solve the problem?
 if(isset($_SESSION['user_id'])) {
         $sql2 = "SELECT distinct `problem_id` FROM `solution` WHERE `user_id`=? AND `result`=4 and `problem_id`=?";
         $result2=pdo_query($sql2, $_SESSION['user_id'], $id);
@@ -125,10 +126,8 @@ if(isset($_SESSION['user_id'])) {
 }
 
 
-
-
 foreach($result as $row){
-        if($row['user_id']==$last_user_id) continue;
+        if($row['user_id']==$last_user_id && $row['language']==$last_lang) continue;
         $sscore=strval($row['score']);
         $s_time=intval(substr($sscore,1,8));
         $s_memory=intval(substr($sscore,9,6));
@@ -161,6 +160,7 @@ foreach($result as $row){
 
         $j++;
         $last_user_id=$row['user_id'];
+        $last_lang=$row['language'];
 	$i++;
 }
 
